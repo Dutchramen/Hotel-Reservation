@@ -1,9 +1,9 @@
 package service;
 
 import model.Customer;
-import model.IRoom;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
 
 public class CustomerService {
     private static CustomerService customerService;
@@ -16,8 +16,8 @@ public class CustomerService {
     }
 
     //static reference for CustomerService class
-    public static CustomerService getInstance(){
-        if(customerService == null){
+    public static CustomerService getInstance() {
+        if (customerService == null) {
             customerService = new CustomerService();
         }
         return customerService;
@@ -34,18 +34,18 @@ public class CustomerService {
     }
 
     //method to add Customers
-    public void addCustomer(String email, String firstName, String lastName){
+    public void addCustomer(String email, String firstName, String lastName) {
         Customer newCustomer = new Customer(email, firstName, lastName);
         customers.add(newCustomer);
     }
 
 
     //method to retrieve customers from Customer Collection
-    public Customer getCustomer(String customerEmail){
-        for (Customer customer : customers){
-        if (customers.contains(customerEmail))
-        return customer;
-    }
+    public Customer getCustomer(String customerEmail) {
+        for (Customer customer : customers) {
+            if (customerEmail.equals(customer.getEmail())) ;
+            return customer;
+        }
         return null;
-}
+    }
 }
