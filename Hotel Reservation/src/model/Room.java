@@ -3,7 +3,8 @@ package model;
 public class Room implements IRoom {
     private String roomNumber;
     private Double price;
-    private RoomType SINGLE, DOUBLE;
+    private RoomType SINGLE;
+    private RoomType DOUBLE;
 
     public Room(String roomNumber, Double price, RoomType SINGLE, RoomType DOUBLE) {
         this.roomNumber = roomNumber;

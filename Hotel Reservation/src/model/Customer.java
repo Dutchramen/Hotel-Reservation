@@ -6,13 +6,13 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String email;
-    private final String emailRegex = "^(.+)@(.+).com$";
-    private final Pattern pattern = Pattern.compile(emailRegex);
 
     public Customer(String firstName, String lastName, String email) throws IllegalArgumentException {
         if (firstName == null || lastName == null){
             throw new IllegalArgumentException("A complete First and Last name must be entered.");
         }
+        String emailRegex = "^(.+)@(.+).com$";
+        Pattern pattern = Pattern.compile(emailRegex);
         if(!pattern.matcher(email).matches()){
             throw new IllegalArgumentException("Error, invalid email");
         }

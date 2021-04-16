@@ -28,8 +28,9 @@ public class CustomerService {
             for (Customer customer : customers) {
                 System.out.println(customer);
             }
-            return customers;
+            return customerService.getAllCustomers();
         }
+
         return null;
     }
 
@@ -39,12 +40,14 @@ public class CustomerService {
         customers.add(newCustomer);
     }
 
-
     //method to retrieve customers from Customer Collection
     public Customer getCustomer(String customerEmail) {
         for (Customer customer : customers) {
-            if (customerEmail.equals(customer.getEmail())) ;
-            return customer;
+            if (customerEmail.equals(customer.getEmail()))
+                System.out.println(customer);
+            {
+                return customer;
+            }
         }
         return null;
     }

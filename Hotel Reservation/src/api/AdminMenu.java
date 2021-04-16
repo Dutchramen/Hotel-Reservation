@@ -20,7 +20,7 @@ public class AdminMenu {
     public Collection<IRoom> rooms = new HashSet<>();
     public Collection<Customer> customers = new HashSet<>();
 
-    public static void selectMainMenuOptions() {
+    public static void selectAdminiViewOptions() {
 
         int adminSelection = adminiViewOptions();
 
@@ -39,11 +39,12 @@ public class AdminMenu {
                 break;
             case 4:
                 //method to retrieve/open admin menu
-                adminiViewOptions();
+                addARoom();
                 break;
             //exits application
             case 5:
                 //method to return back to main menu
+                returnToMainMenu();
             case 6:
                 System.exit(0);
         }
@@ -60,6 +61,7 @@ public class AdminMenu {
         System.out.println("5: Back to Main Menu");
         System.out.println("--------------------------------------------------");
         System.out.println("Please enter a number for the menu option");
+        System.out.println();
 
         Scanner option = new Scanner(System.in);
         int adminSelection = option.nextInt();
@@ -70,37 +72,42 @@ public class AdminMenu {
 
     public static void seeAllCustomers() {
         customerService.getAllCustomers();
+        adminiViewOptions();
     }
 
     public static void seeAllRooms() {
         adminResource.getAllRooms();
+        adminiViewOptions();
     }
 
     public static void seeAllReservations() {
         reservationService.printAllReseverations();
     }
 
-    public static int addARoom() {
+    public static void addARoom() {
         Scanner input = new Scanner(System.in);
+
         System.out.println("Enter room number: ");
-        int adminSelection = input.nextInt();
+        System.out.println(input.nextInt());
         System.out.println("Enter price per night(PPN)");
-        adminSelection = input.nextInt();
+        System.out.println(input.nextInt());
         System.out.println("Enter room type: 1 for Single bed room, 2 for Double bed room");
-        adminSelection = input.nextInt();
+        System.out.println(input.nextInt());
+
         System.out.println("Would you like to add another room: Y/N?");
-        String additionalRoom;
+        System.out.println(input.next());
 
 
-        return adminSelection;
-    }
+//        if (input.equals("Y")){
+//            adminResource.addRoom(room);
+//        } else {
+//            adminiViewOptions();
+        }
+
+
+
 
     public static void returnToMainMenu(){
         MainMenu.mainMenuOptions();
     }
-
-
-
-
-
 }

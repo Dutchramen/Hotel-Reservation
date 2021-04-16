@@ -1,11 +1,22 @@
 package model;
 
+import api.AdminMenu;
+import api.HotelResource;
+import api.MainMenu;
+
+import java.util.Date;
+
 public class Driver {
     public static void main(String[] args) {
-        Customer customer = new Customer("First", "Second", "j@domain.com");
-        System.out.println(customer);
-        Customer customer1 = new Customer("first", "second", "email");
-        System.out.println(customer1);
+
+        MainMenu.selectMainMenuOptions();
+
+//        MainMenu.selectMainMenuOptions();
+//        AdminMenu.selectMainMenuOptions();
+//        AdminMenu.seeAllCustomers();
+
+
+
 
 
     }
