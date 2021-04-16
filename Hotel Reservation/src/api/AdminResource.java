@@ -7,12 +7,10 @@ import service.CustomerService;
 import service.ReservationService;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
 public class AdminResource {
-    private static AdminResource adminResource;
     public static CustomerService customerService = CustomerService.getInstance();
     public static ReservationService reservationService = ReservationService.getInstance();
     public Collection<Reservation> reservations = new HashSet<>();

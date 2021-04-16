@@ -25,25 +25,21 @@ public class MainMenu {
         int guestSelection = mainMenuOptions();
 
         switch (guestSelection) {
-            case 1:
-                //assist customer with finding and reserving a room
-                findAndReserveARoom();
-                break;
-            case 2:
-                //allow customer to see the reservation just created
-                seeCustomerReservation();
-                break;
-            case 3:
-                //assist customer with creating an account
-                createAnAccount();
-                break;
-            case 4:
-                //retrieve/open admin menu
-                adminiViewOptions();
-                break;
-                //exits application
-            case 5:
-                System.exit(0);
+            case 1 ->
+                    //assist customer with finding and reserving a room
+                    findAndReserveARoom();
+            case 2 ->
+                    //allow customer to see the reservation just created
+                    seeCustomerReservation();
+            case 3 ->
+                    //assist customer with creating an account
+                    createAnAccount();
+            case 4 ->
+                    //retrieve/open admin menu
+                    adminiViewOptions();
+
+            //exits application
+            case 5 -> System.exit(0);
         }
     }
 
@@ -70,6 +66,7 @@ public class MainMenu {
 
     //method should use findRooms() and reserveARoom() methods from ReservationService
     public static void findAndReserveARoom() {
+
     }
 
     public static void seeCustomerReservation() {
@@ -77,7 +74,17 @@ public class MainMenu {
     }
 
     public static void createAnAccount() {
-
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("--------------------------------------------------");
+        System.out.println("Enter email format: name@domain.com");
+        String guestSelection = userInput.nextLine();
+        System.out.println("First Name: ");
+        guestSelection = userInput.nextLine();
+        System.out.println("Last Name: ");
+        guestSelection = userInput.nextLine();
+        System.out.println("--------------------------------------------------");
+        System.out.println("Please enter a number for the menu option");
+        guestSelection = userInput.nextLine();
     }
 
     public static void adminiViewOptions() {

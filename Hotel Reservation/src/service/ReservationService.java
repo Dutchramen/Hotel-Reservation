@@ -7,7 +7,7 @@ import model.Reservation;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Set;
 
 public class ReservationService {
     private static ReservationService reservationService;
@@ -20,7 +20,7 @@ public class ReservationService {
     }
 
     //static reference for Reservation class
-    public static ReservationService getInstance(){
+    public static ReservationService getInstance() {
         if (reservationService == null){
             reservationService = new ReservationService();
         }
@@ -32,44 +32,54 @@ public class ReservationService {
         rooms.add(room);
     }
 
-    //method that should return roomId if roomId is available and
+    //method that should return roomNumber
     public IRoom getARoom(String roomNumber) {
         for (IRoom room : rooms) {
-            if (roomNumber.equals(room.getRoomNumber())) {
+            if (room.getRoomNumber().equals(roomNumber)) {
                 return room;
             }
         }
         return null;
     }
 
-
-    public Reservation reserveARoom(String customer, IRoom room, Date checkInDate, Date checkOutDate){
+    public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         Reservation reservedRooms = new Reservation(customer,room,checkInDate, checkOutDate);
         reservations.add(reservedRooms);
         return reservedRooms;
     }
 
-    public Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) {
-        for (IRoom room : rooms) {
-            if (checkInDate.after(checkInDate) && checkOutDate.before(checkOutDate)) {
-                Iterator<IRoom> iRoomIterator = rooms.iterator();
-                while (iRoomIterator.hasNext()) {
-                    System.out.println(iRoomIterator.next());
+
+    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
+        Set<IRoom> roomsOpenForReserve = new HashSet<>();
+        if (reservations.isEmpty()) {
+            rooms = roomsOpenForReserve;
+            System.out.println(roomsOpenForReserve);
+            return roomsOpenForReserve;
+        } else {
+            for (IRoom room : rooms) {
+                for (Reservation reservation : reservations) {
+                    if (((checkInDate.after(reservation.getCheckInDate())) && (checkInDate.before(reservation.getCheckOutDate())))
+                    || (((checkOutDate.after(reservation.getCheckInDate())) && (checkInDate.before(reservation.getCheckOutDate()))))) {
+
+                        roomsOpenForReserve.add(room);
+                        System.out.println(roomsOpenForReserve);
+                    }
                 }
-                return rooms;
             }
         }
-        return null;
+        return roomsOpenForReserve;
     }
 
-    public Collection<Reservation> getCustomerReservation(Customer customer){
+
+    public Collection<Reservation> getCustomerReservation(Customer customer) {
         CustomerService.getInstance().getCustomer(customer.getEmail());
         return reservations;
     }
 
-    public void printAllReseverations(){
+    public void printAllReseverations() {
         for (Reservation reservation : reservations){
-            System.out.println(reservations);
+            System.out.println(reservation);
         }
     }
+
 }

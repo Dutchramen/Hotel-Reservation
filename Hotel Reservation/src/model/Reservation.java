@@ -31,7 +31,7 @@ public class Reservation {
         this.room = room;
     }
 
-    public Date getCheckInDate(Date checkInDate) {
+    public Date getCheckInDate() {
         return checkInDate;
     }
 
@@ -39,7 +39,7 @@ public class Reservation {
         this.checkInDate = checkInDate;
     }
 
-    public Date getCheckOutDate(Date checkOutDate) {
+    public Date getCheckOutDate() {
         return checkOutDate;
     }
 

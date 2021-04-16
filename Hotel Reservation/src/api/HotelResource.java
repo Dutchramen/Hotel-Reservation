@@ -39,11 +39,10 @@ public class HotelResource {
     public Collection<Reservation> getCustomerReservations(String customerEmail) {
         Customer customer = CustomerService.getInstance().getCustomer(customerEmail);
         if (customer == null) return null;
-
         return reservationService.getCustomerReservation(customer);
     }
 
     public Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) {
-        return reservationService.findARoom(checkInDate, checkOutDate);
+        return reservationService.findRooms(checkInDate, checkOutDate);
     }
 }
