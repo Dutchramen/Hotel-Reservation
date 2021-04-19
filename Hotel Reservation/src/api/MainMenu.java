@@ -85,6 +85,9 @@ public class MainMenu {
         System.out.println("--------------------------------------------------");
         System.out.println("Please enter a number for the menu option");
         guestSelection = userInput.nextLine();
+        
+        HotelResource.customerService.addCustomer(newGuestEmail,firstName,lastName);
+
     }
 
     public static void adminiViewOptions() {
