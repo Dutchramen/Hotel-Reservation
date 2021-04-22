@@ -6,16 +6,19 @@ import model.Reservation;
 import service.CustomerService;
 import service.ReservationService;
 
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.Date;
 
 public class MainMenu {
 
-    private static HotelResource hotelResource;
-    private static AdminResource adminResource;
-    public static CustomerService customerService = CustomerService.getInstance();
-    public static ReservationService reservationService = ReservationService.getInstance();
+    public static HotelResource hotelResource;
+    public static AdminResource adminResource;
+    public static final CustomerService customerService = CustomerService.getInstance();
+    public static final ReservationService reservationService = ReservationService.getInstance();
     public Collection<Reservation> reservations = new HashSet<>();
     public Collection<IRoom> rooms = new HashSet<>();
     public Collection<Customer> customers = new HashSet<>();
@@ -65,7 +68,11 @@ public class MainMenu {
 
 
     //method should use findRooms() and reserveARoom() methods from ReservationService
-    public static void findAndReserveARoom() {
+    public static IRoom findAndReserveARoom() {
+        //think through this method!!
+        Set<IRoom> roomsOpenForReserve = new HashSet<>();
+        HotelResource.getInstance().findARoom(reservationService.findRooms(reservationService.reserveARoom(roomsOpenForReserve))).add(roomsOpenForReserve);
+        return ReservationService.getInstance().findRooms(reservationService.reserveARoom(roomsOpenForReserve));
 
     }
 
@@ -74,29 +81,27 @@ public class MainMenu {
     }
 
     public static void createAnAccount() {
+        Collection<Customer> newCustomers = new HashSet<>();
         Scanner userInput = new Scanner(System.in);
         System.out.println("--------------------------------------------------");
         System.out.println("Enter email format: name@domain.com");
-        String guestSelection = userInput.nextLine();
+        String newGuestEmail = userInput.nextLine();
         System.out.println("First Name: ");
-        guestSelection = userInput.nextLine();
+        String firstName = userInput.nextLine();
         System.out.println("Last Name: ");
-        guestSelection = userInput.nextLine();
+        String lastName = userInput.nextLine();
         System.out.println("--------------------------------------------------");
         System.out.println("Please enter a number for the menu option");
-        guestSelection = userInput.nextLine();
-        
-        HotelResource.customerService.addCustomer(newGuestEmail,firstName,lastName);
+        int guestSelection = userInput.nextInt();
+        System.out.println(guestSelection);
 
+        HotelResource.createACustomer(newGuestEmail,firstName,lastName);
     }
 
     public static void adminiViewOptions() {
         AdminMenu.adminiViewOptions();
 
     }
-
-
-
 
     }
 
