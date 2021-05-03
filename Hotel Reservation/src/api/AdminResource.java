@@ -11,48 +11,47 @@ import java.util.HashSet;
 import java.util.List;
 
 public class AdminResource {
+    private static AdminResource adminResource;
     public static CustomerService customerService = CustomerService.getInstance();
     public static ReservationService reservationService = ReservationService.getInstance();
-    public Collection<Reservation> reservations = new HashSet<>();
-    public Collection<IRoom> rooms = new HashSet<>();
-    public Collection<Customer> customers = new HashSet<>();
+    public static Collection<Reservation> reservations = new HashSet<>();
+    public static Collection<IRoom> rooms = new HashSet<>();
+    public static Collection<Customer> customers = new HashSet<>();
 
 
     //static reference
-    private AdminResource(){
+    private AdminResource() {
     }
 
-    public Customer getCustomer(String email){
+    public static AdminResource getInstance() {
+        if (null == adminResource) {
+            adminResource = new AdminResource();
+        }
+        return adminResource;
+    }
+
+    public Customer getCustomer(String email) {
         return customerService.getCustomer(email);
     }
-    public void addRoom(List<IRoom> rooms){
-        for (IRoom room : rooms){
+
+    public void addRoom(List<IRoom> rooms) {
+        for (IRoom room : rooms) {
             reservationService.addRoom(room);
         }
     }
 
     public Collection<IRoom> getAllRooms() {
-        if (!rooms.isEmpty()) {
-            for (IRoom room : rooms) {
-                System.out.println(room);
-            }
-            return reservationService.rooms;
-        }
-        return null;
+        return reservationService.getAllRooms();
     }
+
 
     public Collection<Customer> getAllCustomers() {
-        if (!customers.isEmpty()) {
-            for (Customer customer : customers) {
-                System.out.println(customer);
-            }
-            return customerService.getAllCustomers();
-        }
-        return null;
+        return customerService.getAllCustomers();
     }
 
-    public void displayAllReservations() {
-        reservationService.printAllReseverations();
+
+    public static void displayAllReservations() {
+        reservationService.printAllReservations();
     }
 
 }

@@ -25,12 +25,12 @@ public class HotelResource {
         return hotelResource;
     }
 
-    public static Customer getCustomer(String email) {
+    public Customer getCustomer(String email) {
         return CustomerService.getInstance().getCustomer(email);
 //                customerService.getCustomer(email);
     }
 
-    public static void createACustomer(String email, String firstName, String lastName) {
+    public void createACustomer(String email, String firstName, String lastName) {
         CustomerService.getInstance().addCustomer(email, firstName, lastName);
 //        customerService.addCustomer(email, firstName,lastName);
     }

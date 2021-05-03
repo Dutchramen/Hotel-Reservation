@@ -7,11 +7,11 @@ import java.util.HashSet;
 
 public class CustomerService {
     private static CustomerService customerService;
-    public Collection<Customer> customers = new HashSet<>();
+    public static Collection<Customer> customers = new HashSet<>();
 
 
     //private constructor to facilitate the Singleton Pattern
-    // for the "There can be only One!!!!" instance of this class
+    // for "There can be only One!!!!" instance of this class
     private CustomerService() {
     }
 
@@ -28,10 +28,8 @@ public class CustomerService {
             for (Customer customer : customers) {
                 System.out.println(customer);
             }
-            return customerService.getAllCustomers();
         }
-
-        return null;
+        return customers;
     }
 
     //method to add Customers

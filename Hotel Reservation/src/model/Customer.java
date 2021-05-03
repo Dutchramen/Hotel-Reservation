@@ -1,13 +1,15 @@
 package model;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Customer {
+    private String email;
     private String firstName;
     private String lastName;
-    private String email;
 
-    public Customer(String firstName, String lastName, String email) throws IllegalArgumentException {
+
+    public Customer(String email, String firstName, String lastName) throws IllegalArgumentException {
         if (firstName == null || lastName == null){
             throw new IllegalArgumentException("A complete First and Last name must be entered.");
         }
@@ -16,8 +18,8 @@ public class Customer {
         if(!pattern.matcher(email).matches()){
             throw new IllegalArgumentException("Error, invalid email");
         }
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = firstName.toUpperCase();
+        this.lastName = lastName.toUpperCase();
         this.email = email;
     }
 
@@ -47,7 +49,20 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer details: " + "firstName: " + firstName + ", lastName: " + lastName +
-                ", email: " + email;
+        return "Customer details: " + "Email: " + email + ", First Name: " + firstName +
+                ", Last Name: " + lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return email.equals(customer.email) && firstName.equals(customer.firstName) && lastName.equals(customer.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, firstName, lastName);
     }
 }

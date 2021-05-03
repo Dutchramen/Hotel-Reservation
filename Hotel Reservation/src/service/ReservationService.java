@@ -11,11 +11,11 @@ import java.util.Set;
 
 public class ReservationService {
     private static ReservationService reservationService;
-    public Collection<Reservation> reservations = new HashSet<>();
-    public Collection<IRoom> rooms = new HashSet<>();
+    public static Collection<Reservation> reservations = new HashSet<>();
+    public static Collection<IRoom> rooms = new HashSet<>();
 
     //private constructor to facilitate the Singleton Pattern
-    // for the "There can be only One!!!!" instance of this class
+    // for "There can be only One!!!!" instance of this class
     private ReservationService() {
     }
 
@@ -32,10 +32,15 @@ public class ReservationService {
         rooms.add(room);
     }
 
-    //method that should return roomNumber
+    public Collection<IRoom> getAllRooms() {
+        return rooms;
+    }
+
+    //method that should return room
     public IRoom getARoom(String roomNumber) {
         for (IRoom room : rooms) {
-            if (room.getRoomNumber().equals(roomNumber)) {
+            if (roomNumber.equals(room.getRoomNumber())) {
+                System.out.println("This room has already been created.  Please enter alternate room number.");
                 return room;
             }
         }
@@ -49,23 +54,20 @@ public class ReservationService {
     }
 
 
-    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
+    public Collection <IRoom> findRooms(Date checkInDate, Date checkOutDate) {
         Set<IRoom> roomsOpenForReserve = new HashSet<>();
         if (reservations.isEmpty()) {
-            rooms = roomsOpenForReserve;
-            System.out.println(roomsOpenForReserve);
-            return roomsOpenForReserve;
+            return rooms;
         } else {
-            for (IRoom room : rooms) {
                 for (Reservation reservation : reservations) {
-                    if (((checkInDate.after(reservation.getCheckInDate())) && (checkInDate.before(reservation.getCheckOutDate())))
-                    || (((checkOutDate.after(reservation.getCheckInDate())) && (checkInDate.before(reservation.getCheckOutDate()))))) {
-
-                        roomsOpenForReserve.add(room);
-                        System.out.println(roomsOpenForReserve);
+                    /* if requested RM & RSV are already taken in system due to prior RSV of RM,
+                    requested RM number will be removed from roomsOpenForReserve list */
+                    if (((!checkInDate.after(reservation.getCheckInDate())) && (!checkInDate.before(reservation.getCheckOutDate())))
+                    || (((!checkOutDate.after(reservation.getCheckInDate())) && (!checkInDate.before(reservation.getCheckOutDate()))))) {
+                        reservations.add(reservation);
+                        System.out.println(reservation);
                     }
                 }
-            }
         }
         return roomsOpenForReserve;
     }
@@ -76,7 +78,7 @@ public class ReservationService {
         return reservations;
     }
 
-    public void printAllReseverations() {
+    public void printAllReservations() {
         for (Reservation reservation : reservations){
             System.out.println(reservation);
         }
