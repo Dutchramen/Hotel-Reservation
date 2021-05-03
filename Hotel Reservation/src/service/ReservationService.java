@@ -4,15 +4,14 @@ import model.Customer;
 import model.IRoom;
 import model.Reservation;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class ReservationService {
     private static ReservationService reservationService;
-    public static Collection<Reservation> reservations = new HashSet<>();
-    public static Collection<IRoom> rooms = new HashSet<>();
+    public static Collection<Reservation> reservations = new ArrayList<>();
+    public static Collection<IRoom> rooms = new ArrayList<>();
 
     //private constructor to facilitate the Singleton Pattern
     // for "There can be only One!!!!" instance of this class
@@ -55,7 +54,7 @@ public class ReservationService {
 
 
     public Collection <IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        Set<IRoom> roomsOpenForReserve = new HashSet<>();
+        Collection<IRoom> roomsOpenForReserve = new ArrayList<>();
         if (reservations.isEmpty()) {
             return rooms;
         } else {
@@ -64,8 +63,12 @@ public class ReservationService {
                     requested RM number will be removed from roomsOpenForReserve list */
                     if (((!checkInDate.after(reservation.getCheckInDate())) && (!checkInDate.before(reservation.getCheckOutDate())))
                     || (((!checkOutDate.after(reservation.getCheckInDate())) && (!checkInDate.before(reservation.getCheckOutDate()))))) {
-                        reservations.add(reservation);
-                        System.out.println(reservation);
+                        for (IRoom room : rooms){
+                            if (!reservation.getRoom().equals(room)){
+                                roomsOpenForReserve.add(room);
+                            }
+                        }
+                        System.out.println(roomsOpenForReserve);
                     }
                 }
         }

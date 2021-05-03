@@ -62,7 +62,7 @@ public class AdminMenu {
 
     public static void seeAllCustomers() {
         Collection<Customer> customers = adminResource.getAllCustomers();
-        customers.forEach(System.out::println);
+        System.out.println();
         selectAdminiViewOptions();
     }
 
@@ -107,6 +107,7 @@ public class AdminMenu {
             case "N" -> {
                 adminResource.addRoom(rooms);
                 selectAdminiViewOptions();
+                System.out.println();
             }
             default -> selectAdminiViewOptions();
         }
@@ -114,6 +115,6 @@ public class AdminMenu {
 
 
     public static void returnToMainMenu(){
-        MainMenu.mainMenuOptions();
+        MainMenu.selectMainMenuOptions();
     }
 }

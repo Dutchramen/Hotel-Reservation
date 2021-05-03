@@ -26,38 +26,32 @@ public class HotelResource {
     }
 
     public Customer getCustomer(String email) {
-        return CustomerService.getInstance().getCustomer(email);
-//                customerService.getCustomer(email);
+        return customerService.getCustomer(email);
     }
 
     public void createACustomer(String email, String firstName, String lastName) {
-        CustomerService.getInstance().addCustomer(email, firstName, lastName);
-//        customerService.addCustomer(email, firstName,lastName);
+        customerService.addCustomer(email, firstName,lastName);
     }
 
     public IRoom getRoom(String roomNumber) {
-        return ReservationService.getInstance().getARoom(roomNumber);
-//                reservationService.getARoom(roomNumber);
+        return reservationService.getARoom(roomNumber);
     }
 
     public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
         Customer customer = CustomerService.getInstance().getCustomer(customerEmail);
         if (customer == null) return null;
-        return ReservationService.getInstance().reserveARoom(customer,room,checkInDate,checkOutDate);
-//        reservationService.reserveARoom(customer,room,checkInDate,checkOutDate);
+        return reservationService.reserveARoom(customer,room,checkInDate,checkOutDate);
     }
 
     public Collection<Reservation> getCustomerReservations(String customerEmail) {
         Customer customer = CustomerService.getInstance().getCustomer(customerEmail);
         if (customer == null) return null;
-        return ReservationService.getInstance().getCustomerReservation(customer);
-//                reservationService.getCustomerReservation(customer);
+        return reservationService.getCustomerReservation(customer);
     }
 
     public Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) {
         Reservation reservation = (Reservation) ReservationService.getInstance().findRooms(checkInDate,checkOutDate);
         if (reservation == null) return null;
-        return ReservationService.getInstance().findRooms(checkInDate,checkOutDate);
-//                reservationService.findRooms(checkInDate, checkOutDate);
+        return reservationService.findRooms(checkInDate, checkOutDate);
     }
 }
