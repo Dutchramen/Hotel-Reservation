@@ -1,20 +1,18 @@
 package api;
 
-import model.*;
-import service.CustomerService;
-import service.ReservationService;
+import model.Customer;
+import model.IRoom;
+import model.Room;
+import model.RoomType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Scanner;
 
 public class AdminMenu {
     private static final HotelResource hotelResource = HotelResource.getInstance();
     private static final AdminResource adminResource = AdminResource.getInstance();
-    private static final CustomerService customerService = CustomerService.getInstance();
-    private static final ReservationService reservationService = ReservationService.getInstance();
-    public Collection<Reservation> reservations = new HashSet<>();
-    public Collection<IRoom> rooms = new HashSet<>();
-    public Collection<Customer> customers = new HashSet<>();
-
 
     public static void selectAdminiViewOptions() {
 
@@ -30,7 +28,7 @@ public class AdminMenu {
             case 4 -> //method to retrieve/open admin menu
                     addARoom();
             case 5 ->  //method to return back to main menu
-                returnToMainMenu();
+                    returnToMainMenu();
             case 6 -> //exits application
                     System.exit(0);
             default -> {
@@ -75,6 +73,7 @@ public class AdminMenu {
 
     public static void seeAllReservations() {
         AdminResource.displayAllReservations();
+        selectAdminiViewOptions();
     }
 
     public static void addARoom() {
@@ -109,12 +108,15 @@ public class AdminMenu {
                 selectAdminiViewOptions();
                 System.out.println();
             }
-            default -> selectAdminiViewOptions();
+            default -> {
+                System.out.println("Would you like to add another room: Y/N?");
+                selectAdminiViewOptions();
+            }
         }
     }
 
 
-    public static void returnToMainMenu(){
+    public static void returnToMainMenu() {
         MainMenu.selectMainMenuOptions();
     }
 }

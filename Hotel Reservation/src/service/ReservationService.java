@@ -39,7 +39,7 @@ public class ReservationService {
     public IRoom getARoom(String roomNumber) {
         for (IRoom room : rooms) {
             if (roomNumber.equals(room.getRoomNumber())) {
-                System.out.println("This room has already been created.  Please enter alternate room number.");
+                System.out.println(roomNumber);
                 return room;
             }
         }
@@ -47,38 +47,37 @@ public class ReservationService {
     }
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
-        Reservation reservedRooms = new Reservation(customer,room,checkInDate, checkOutDate);
-        reservations.add(reservedRooms);
-        return reservedRooms;
+        Reservation customerReservation = new Reservation(customer,room,checkInDate, checkOutDate);
+        reservations.add(customerReservation);
+        return customerReservation;
     }
-
 
     public Collection <IRoom> findRooms(Date checkInDate, Date checkOutDate) {
         Collection<IRoom> roomsOpenForReserve = new ArrayList<>();
         if (reservations.isEmpty()) {
             return rooms;
         } else {
-                for (Reservation reservation : reservations) {
+            for (Reservation reservation : reservations) {
                     /* if requested RM & RSV are already taken in system due to prior RSV of RM,
                     requested RM number will be removed from roomsOpenForReserve list */
-                    if (((!checkInDate.after(reservation.getCheckInDate())) && (!checkInDate.before(reservation.getCheckOutDate())))
-                    || (((!checkOutDate.after(reservation.getCheckInDate())) && (!checkInDate.before(reservation.getCheckOutDate()))))) {
-                        for (IRoom room : rooms){
-                            if (!reservation.getRoom().equals(room)){
-                                roomsOpenForReserve.add(room);
-                            }
+                if (((!checkInDate.after(reservation.getCheckInDate())) && (!checkInDate.before(reservation.getCheckOutDate())))
+                        || (((checkOutDate.after(reservation.getCheckInDate())) && (!checkInDate.before(reservation.getCheckOutDate())))))
+                {
+                    for (IRoom room : rooms){
+                        if (!reservation.getRoom().equals(room)){
+                            roomsOpenForReserve.add(room);
                         }
-                        System.out.println(roomsOpenForReserve);
                     }
                 }
+            }
         }
         return roomsOpenForReserve;
     }
 
-
-    public Collection<Reservation> getCustomerReservation(Customer customer) {
+    public Collection<Reservation> getCustomersReservation(Customer customer) {
         CustomerService.getInstance().getCustomer(customer.getEmail());
         return reservations;
+
     }
 
     public void printAllReservations() {

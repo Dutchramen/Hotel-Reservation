@@ -43,15 +43,15 @@ public class HotelResource {
         return reservationService.reserveARoom(customer,room,checkInDate,checkOutDate);
     }
 
-    public Collection<Reservation> getCustomerReservations(String customerEmail) {
+    public Collection<Reservation> getCustomersReservations(String customerEmail) {
         Customer customer = CustomerService.getInstance().getCustomer(customerEmail);
         if (customer == null) return null;
-        return reservationService.getCustomerReservation(customer);
+        return reservationService.getCustomersReservation(customer);
     }
 
     public Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) {
-        Reservation reservation = (Reservation) ReservationService.getInstance().findRooms(checkInDate,checkOutDate);
-        if (reservation == null) return null;
+        Collection<IRoom> rooms = ReservationService.getInstance().findRooms(checkInDate,checkOutDate);
+        if (rooms == null) return null;
         return reservationService.findRooms(checkInDate, checkOutDate);
     }
 }

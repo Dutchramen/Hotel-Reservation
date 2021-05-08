@@ -9,7 +9,6 @@ public class CustomerService {
     private static CustomerService customerService;
     public static Collection<Customer> customers = new ArrayList<>();
 
-
     //private constructor to facilitate the Singleton Pattern
     // for "There can be only One!!!!" instance of this class
     private CustomerService() {
@@ -25,9 +24,7 @@ public class CustomerService {
 
     public Collection<Customer> getAllCustomers() {
         if (!customers.isEmpty()) {
-            for (Customer customer : customers) {
-                System.out.println(customer);
-            }
+                customers.forEach(System.out::println);
         }
         return customers;
     }
@@ -41,11 +38,9 @@ public class CustomerService {
     //method to retrieve customers from Customer Collection
     public Customer getCustomer(String customerEmail) {
         for (Customer customer : customers) {
-            if (customerEmail.equals(customer.getEmail()))
-                System.out.println(customer);
-            {
+            if (!customerEmail.equals(customer.getEmail()))
+                System.out.println(customerEmail);
                 return customer;
-            }
         }
         return null;
     }
