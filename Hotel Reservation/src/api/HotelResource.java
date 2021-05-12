@@ -30,7 +30,7 @@ public class HotelResource {
     }
 
     public void createACustomer(String email, String firstName, String lastName) {
-        customerService.addCustomer(email, firstName,lastName);
+            customerService.addCustomer(email, firstName,lastName);
     }
 
     public IRoom getRoom(String roomNumber) {

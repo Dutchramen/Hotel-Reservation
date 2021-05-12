@@ -5,10 +5,7 @@ import model.IRoom;
 import model.Room;
 import model.RoomType;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class AdminMenu {
     private static final HotelResource hotelResource = HotelResource.getInstance();
@@ -16,7 +13,13 @@ public class AdminMenu {
 
     public static void selectAdminiViewOptions() {
 
-        int adminSelection = adminiViewOptions();
+        int adminSelection = 0;
+        try {
+            adminSelection = adminiViewOptions();
+        } catch (InputMismatchException e) {
+            System.out.println("Please make sure you only enter numbers that " +
+                    "are available to select on your menu.  Please re-enter your selection.\n");
+        }
 
         switch (adminSelection) {
             case 1 -> //method to view all customers created in system
@@ -32,7 +35,6 @@ public class AdminMenu {
             case 6 -> //exits application
                     System.exit(0);
             default -> {
-                System.out.println("Please make a valid selection.");
                 selectAdminiViewOptions();
             }
         }
@@ -114,6 +116,7 @@ public class AdminMenu {
             }
         }
     }
+
 
 
     public static void returnToMainMenu() {

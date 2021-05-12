@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -17,7 +18,13 @@ public class MainMenu {
 
     public static void selectMainMenuOptions() {
 
-        int guestSelection = mainMenuOptions();
+        int guestSelection = 0;
+        try {
+            guestSelection = mainMenuOptions();
+        } catch (InputMismatchException e) {
+            System.out.println("Please make sure you only enter numbers that " +
+                    "are available to select on your menu.  Please re-enter your selection.\n");
+        }
 
         switch (guestSelection) {
             case 1 ->
@@ -26,7 +33,7 @@ public class MainMenu {
                         try {
                             findAndReserveARoom();
                         } catch (ParseException e) {
-                            System.out.println("Please make a valid entry.");
+                            System.out.println("Please make a valid entry.\n");
                         }
                     }
             case 2 ->
@@ -109,7 +116,14 @@ public class MainMenu {
 
                 System.out.println("Please enter the room number for the room you would like to reserve.\n");
                 String roomNumber = input.next();
-                IRoom requestedRoom = hotelResource.getRoom(roomNumber);
+                IRoom requestedRoom = null;
+                try {
+                    requestedRoom = hotelResource.getRoom(roomNumber);
+                } catch (Exception e) {
+                    System.out.println("Wow! Something went wrong.  " +
+                            "Looks like this room number doesn't exist. " +
+                            "Please select another room. Thank you!");
+                }
                 System.out.println("Room number: " + requestedRoom);
                 System.out.println();
 
@@ -149,15 +163,14 @@ public class MainMenu {
     }
 
     public static void createAnAccount() {
-
         Scanner userInput = new Scanner(System.in);
         System.out.println("--------------------------------------------------");
         System.out.println("Enter email format: name@domain.com");
-        String newGuestEmail = userInput.nextLine();
+        String newGuestEmail = userInput.next();
         System.out.println("First Name: ");
-        String firstName = userInput.nextLine();
+        String firstName = userInput.next();
         System.out.println("Last Name: ");
-        String lastName = userInput.nextLine();
+        String lastName = userInput.next();
         System.out.println("--------------------------------------------------");
         System.out.println("Please make your selection.");
         System.out.println("--------------------------------------------------");

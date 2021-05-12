@@ -9,14 +9,20 @@ public class Customer {
     private String lastName;
 
 
-    public Customer(String email, String firstName, String lastName) throws IllegalArgumentException {
+    public Customer(String email, String firstName, String lastName) throws NullPointerException, IllegalArgumentException {
+        super();
         if (firstName == null || lastName == null){
-            throw new IllegalArgumentException("A complete First and Last name must be entered.");
+            throw new NullPointerException("A complete First and Last name must be entered.");
         }
         String emailRegex = "^(.+)@(.+).com$";
         Pattern pattern = Pattern.compile(emailRegex);
+
         if(!pattern.matcher(email).matches()){
-            throw new IllegalArgumentException("Error, invalid email");
+//            throw new IllegalArgumentException("Error, invalid email.");
+            System.out.println("""
+                    Error, invalid email.
+                    Please remember to enter email format: name@domain.com
+                    """);
         }
         this.firstName = firstName.toUpperCase();
         this.lastName = lastName.toUpperCase();

@@ -10,6 +10,7 @@ public class Reservation {
     private Date checkOutDate;
 
     public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+        super();
         this.customer = customer;
         this.room = room;
         this.checkInDate = checkInDate;

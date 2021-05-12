@@ -1,5 +1,6 @@
 package model;
 
+import java.util.InputMismatchException;
 import java.util.Objects;
 
 public class Room implements IRoom {
@@ -7,7 +8,12 @@ public class Room implements IRoom {
     private Double price;
     private RoomType roomType;
 
-    public Room(String roomNumber, Double price, RoomType roomType) {
+    public Room(String roomNumber, Double price, RoomType roomType) throws NullPointerException, InputMismatchException {
+        super();
+        if (roomNumber == null){
+            System.out.println("Oops!  It looks the like you forgot to enter a room number and/or " +
+                    "the type of room you want.  Please re-enter your selection.\n");
+        }
         this.roomNumber = roomNumber;
         this.price = price;
         this.roomType = roomType;
