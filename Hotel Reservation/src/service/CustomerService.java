@@ -31,12 +31,8 @@ public class CustomerService {
 
     //method to add Customers
     public void addCustomer(String email, String firstName, String lastName) throws NullPointerException, IllegalArgumentException {
-        try {
-            Customer customer = new Customer(email, firstName, lastName);
-            customers.add(customer);
-        } catch (NullPointerException | IllegalArgumentException e1) {
-            e1.printStackTrace();
-        }
+        Customer customer = new Customer(email, firstName, lastName);
+        customers.add(customer);
     }
 
     //method to retrieve customers from Customer Collection

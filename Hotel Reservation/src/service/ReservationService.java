@@ -4,14 +4,14 @@ import model.Customer;
 import model.IRoom;
 import model.Reservation;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 public class ReservationService {
     private static ReservationService reservationService;
-    public static Collection<Reservation> reservations = new ArrayList<>();
-    public static Collection<IRoom> rooms = new ArrayList<>();
+    public static Collection<Reservation> reservations = new HashSet<>();
+    public static Collection<IRoom> rooms = new HashSet<>();
 
     //private constructor to facilitate the Singleton Pattern
     // for "There can be only One!!!!" instance of this class
@@ -38,8 +38,7 @@ public class ReservationService {
     //method that should return room
     public IRoom getARoom(String roomNumber) {
         for (IRoom room : rooms) {
-            if (roomNumber.equals(room.getRoomNumber())) {
-                System.out.println(roomNumber);
+            if (room.getRoomNumber().equals(roomNumber)){
                 return room;
             }
         }
@@ -53,7 +52,7 @@ public class ReservationService {
     }
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        Collection<IRoom> roomsOpenForReserve = new ArrayList<>();
+        Collection<IRoom> roomsOpenForReserve = new HashSet<>();
         if (reservations.isEmpty()) {
             return rooms;
         } else {
@@ -74,8 +73,13 @@ public class ReservationService {
     }
 
     public Collection<Reservation> getCustomersReservation(Customer customer) {
-        CustomerService.getInstance().getCustomer(customer.getEmail());
-        return reservations;
+        Collection<Reservation> customerReservation = new HashSet<>();
+        for (Reservation reservation : reservations){
+            if (reservation.getCustomer().equals(customer)){
+                customerReservation.add(reservation);
+            }
+        }
+        return customerReservation;
     }
 
     public void printAllReservations() {

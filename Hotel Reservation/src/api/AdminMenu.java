@@ -78,21 +78,54 @@ public class AdminMenu {
         selectAdminiViewOptions();
     }
 
-    public static void addARoom() {
+    public static void addARoom() throws NumberFormatException, InputMismatchException {
         //scanner to capture user input
         Scanner input = new Scanner(System.in);
 
         //capture room number to add to list of rooms
         System.out.println("Enter room number: ");
         String roomNumber = input.nextLine();
+        int rN = 0;
+        try {
+            rN = Integer.parseInt(roomNumber);
+        } catch (NumberFormatException e) {
+            System.out.println("Please be sure to input only " +
+                    "numeric values for the room number(s).\n");
+            System.out.println("Please try again.\n");
+            selectAdminiViewOptions();
+        }
 
         //capture the price of the room
         System.out.println("Enter room price: ");
-        double price = input.nextDouble();
+        double price = 0;
+        try {
+            price = input.nextDouble();
+        } catch (InputMismatchException e) {
+            System.out.println("Please be sure to input only " +
+                    "numeric values for the room price(s).\n");
+            while (price == 0){
+                System.out.println("Please try again.\n");
+                addARoom();
+            }
+        }
+//        System.out.println("Please re-enter the room price.");
+
 
         //capture room type
         System.out.println("Enter room type: SINGLE(1) / DOUBLE(2): ");
-        RoomType roomType = input.nextInt() == 1 ? RoomType.SINGLE : RoomType.DOUBLE;
+        RoomType roomType = null;
+        try {
+            roomType = input.nextInt() == 1 ? RoomType.SINGLE : RoomType.DOUBLE;
+        } catch (InputMismatchException e1) {
+            System.out.println("Invalid entry.  \"1 for (SINGLE) / 2 for (DOUBLE)\"\n");
+            while (roomType == null){
+//                roomType = input.nextInt() == 1 ? RoomType.SINGLE : RoomType.DOUBLE;
+                System.out.println("Please try again.\n");
+                addARoom();
+            }
+        }
+//        System.out.println("Please select your room type once more.");
+
 
         IRoom room = new Room(roomNumber, price, roomType);
         List<IRoom> rooms = new ArrayList<>();
@@ -110,10 +143,9 @@ public class AdminMenu {
                 selectAdminiViewOptions();
                 System.out.println();
             }
-            default -> {
-                System.out.println("Would you like to add another room: Y/N?");
+            default ->
                 selectAdminiViewOptions();
-            }
+
         }
     }
 

@@ -41,7 +41,15 @@ public class MainMenu {
                     seeCustomerReservations();
             case 3 ->
                     //assist customer with creating an account
-                    createAnAccount();
+                    {
+                        try {
+                            createAnAccount();
+                        } catch (Exception e) {
+                            System.out.println(e.getLocalizedMessage());
+                        } finally {
+                            selectMainMenuOptions();
+                        }
+                    }
             case 4 ->
                     //retrieve/open admin menu
                     adminiViewOptions();
@@ -62,7 +70,6 @@ public class MainMenu {
         System.out.println("5: Exit");
         System.out.println("--------------------------------------------------");
         System.out.println("Please make your selection.");
-
 
         Scanner option = new Scanner(System.in);
         int guestSelection = option.nextInt();
@@ -85,10 +92,8 @@ public class MainMenu {
                 System.out.println("Already have an account?  Verify your account by entering your email address below.\n");
                 System.out.println("Please enter your registered email address: \n");
 
-                String email;
-                Customer customer = null;
-                email = input.next();
-                customer = hotelResource.getCustomer(email);
+                String email = input.next();
+                Customer customer = hotelResource.getCustomer(email);
                 System.out.println(customer);
 
                 //guest has already registered an account
@@ -115,25 +120,18 @@ public class MainMenu {
                 Collection<IRoom> rooms = hotelResource.findARoom(checkIn, checkOut);
 
                 System.out.println("Please enter the room number for the room you would like to reserve.\n");
+                rooms.forEach(System.out::println);
+                System.out.println("Room number: ");
                 String roomNumber = input.next();
-                IRoom requestedRoom = null;
-                try {
-                    requestedRoom = hotelResource.getRoom(roomNumber);
-                } catch (Exception e) {
-                    System.out.println("Wow! Something went wrong.  " +
-                            "Looks like this room number doesn't exist. " +
-                            "Please select another room. Thank you!");
-                }
-                System.out.println("Room number: " + requestedRoom);
-                System.out.println();
+                IRoom requestedRoom = hotelResource.getRoom(roomNumber);
+                System.out.println("Room number: " + requestedRoom + "\n");
 
                 if (rooms.contains(requestedRoom)) {
-                    if (customer != null) {
-                        hotelResource.bookARoom(customer.getEmail(), requestedRoom, checkIn, checkOut);
-                    }
+                    hotelResource.bookARoom(customer.getEmail(), requestedRoom, checkIn, checkOut);
                     System.out.println("Room " + requestedRoom + "\nReserved for Username: " + customer + "\n");
                 } else {
-                    System.out.println("We're sorry but " + requestedRoom + " is already reserved.  Please select another room to reserve.");
+                    System.out.println("We're sorry but " + requestedRoom + " is already reserved.  " +
+                            "Please select another room to reserve.\n");
                 }
             }
 
@@ -157,12 +155,15 @@ public class MainMenu {
         System.out.println("Please enter your registered email address.");
 
         String email = input.next();
-        Collection<Reservation> customerReservation = hotelResource.getCustomersReservations(email);
-        System.out.println(customerReservation);
+        Collection<Reservation> reservations = hotelResource.getCustomersReservations(email);
+        for (Reservation reservation : reservations) {
+            System.out.println(reservation);
+        }
         selectMainMenuOptions();
     }
 
     public static void createAnAccount() {
+
         Scanner userInput = new Scanner(System.in);
         System.out.println("--------------------------------------------------");
         System.out.println("Enter email format: name@domain.com");
@@ -182,8 +183,6 @@ public class MainMenu {
         System.out.println("--------------------------------------------------");
 
         hotelResource.createACustomer(newGuestEmail, firstName, lastName);
-        selectMainMenuOptions();
-
     }
 
     public static void adminiViewOptions() {
