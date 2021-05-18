@@ -38,9 +38,10 @@ public class CustomerService {
     //method to retrieve customers from Customer Collection
     public Customer getCustomer(String customerEmail) {
         for (Customer customer : customers) {
-            if (!customerEmail.equals(customer.getEmail()))
+            if (customerEmail.equals(customer.getEmail())) {
                 System.out.println(customerEmail);
                 return customer;
+            }
         }
         return null;
     }

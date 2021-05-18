@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 public class MainMenu {
     private static final HotelResource hotelResource = HotelResource.getInstance();
-    private static final AdminResource adminResource = AdminResource.getInstance();
     private static final String DATE_FORMAT = "MM/dd/yyyy";
 
     public static void selectMainMenuOptions() {
@@ -37,7 +36,7 @@ public class MainMenu {
                         }
                     }
             case 2 ->
-                    //allow customer to see the reservation just created
+                    //allow customer to see the reservation(s) just created
                     seeCustomerReservations();
             case 3 ->
                     //assist customer with creating an account
@@ -77,7 +76,24 @@ public class MainMenu {
         return guestSelection;
     }
 
-    //method should use findRooms() and reserveARoom() methods from ReservationService
+    public static void createAnAccount() {
+
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("--------------------------------------------------");
+        System.out.println("Enter email format: name@domain.com");
+        String guestEmail = userInput.next();
+        System.out.println("First Name: ");
+        String firstName = userInput.next();
+        System.out.println("Last Name: ");
+        String lastName = userInput.next();
+        System.out.println("--------------------------------------------------");
+        System.out.println("Please make your selection.");
+        System.out.println("--------------------------------------------------");
+
+        hotelResource.createACustomer(guestEmail, firstName, lastName);
+    }
+
+    //method should use findARoom() and bookARoom() methods from HotelResource
     public static void findAndReserveARoom() throws ParseException, NullPointerException {
         //scanner to capture user input
         Scanner input = new Scanner(System.in);
@@ -111,21 +127,23 @@ public class MainMenu {
                 System.out.println(checkIn);
                 System.out.println();
 
+                //check-out date
                 System.out.println("Check-Out Date: ");
                 String checkOutDate = input.next();
                 Date checkOut = new SimpleDateFormat(DATE_FORMAT).parse(checkOutDate);
                 System.out.println(checkOut);
                 System.out.println();
 
+                //search rooms using user input from above
                 Collection<IRoom> rooms = hotelResource.findARoom(checkIn, checkOut);
-
-                System.out.println("Please enter the room number for the room you would like to reserve.\n");
                 rooms.forEach(System.out::println);
+
+                //ask guest what room number they would possibly like to reserve
+                System.out.println("Please enter the room number for the room you would like to reserve.\n");
                 System.out.println("Room number: ");
                 String roomNumber = input.next();
                 IRoom requestedRoom = hotelResource.getRoom(roomNumber);
                 System.out.println("Room number: " + requestedRoom + "\n");
-
                 if (rooms.contains(requestedRoom)) {
                     hotelResource.bookARoom(customer.getEmail(), requestedRoom, checkIn, checkOut);
                     System.out.println("Room " + requestedRoom + "\nReserved for Username: " + customer + "\n");
@@ -162,33 +180,9 @@ public class MainMenu {
         selectMainMenuOptions();
     }
 
-    public static void createAnAccount() {
 
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("--------------------------------------------------");
-        System.out.println("Enter email format: name@domain.com");
-        String newGuestEmail = userInput.next();
-        System.out.println("First Name: ");
-        String firstName = userInput.next();
-        System.out.println("Last Name: ");
-        String lastName = userInput.next();
-        System.out.println("--------------------------------------------------");
-        System.out.println("Please make your selection.");
-        System.out.println("--------------------------------------------------");
-        System.out.println("1: Find and Reserve a Room");
-        System.out.println("2: See my reservations");
-        System.out.println("3: Create an account");
-        System.out.println("4: Admin");
-        System.out.println("5: Exit");
-        System.out.println("--------------------------------------------------");
-
-        hotelResource.createACustomer(newGuestEmail, firstName, lastName);
-    }
 
     public static void adminiViewOptions() {
         AdminMenu.selectAdminiViewOptions();
     }
 }
-
-
-

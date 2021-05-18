@@ -8,9 +8,11 @@ import model.RoomType;
 import java.util.*;
 
 public class AdminMenu {
-    private static final HotelResource hotelResource = HotelResource.getInstance();
     private static final AdminResource adminResource = AdminResource.getInstance();
 
+    /**
+     * method that allows staff to navigate AdminiView menu
+     */
     public static void selectAdminiViewOptions() {
 
         int adminSelection = 0;
@@ -34,9 +36,9 @@ public class AdminMenu {
                     returnToMainMenu();
             case 6 -> //exits application
                     System.exit(0);
-            default -> {
+            default ->
                 selectAdminiViewOptions();
-            }
+
         }
     }
 
@@ -60,12 +62,18 @@ public class AdminMenu {
         return adminSelection;
     }
 
+    /**
+     * method that allows staff to see a full listing of all customers created within system
+     */
     public static void seeAllCustomers() {
         Collection<Customer> customers = adminResource.getAllCustomers();
         System.out.println();
         selectAdminiViewOptions();
     }
 
+    /**
+     * method that allows staff to see a full listing of all rooms created within system
+     */
     public static void seeAllRooms() {
         Collection<IRoom> rooms = adminResource.getAllRooms();
         rooms.forEach(System.out::println);
@@ -73,11 +81,19 @@ public class AdminMenu {
         selectAdminiViewOptions();
     }
 
+    /**
+     * method that allows staff to see a full listing of all reservations created within system
+     */
     public static void seeAllReservations() {
         AdminResource.displayAllReservations();
         selectAdminiViewOptions();
     }
 
+    /**
+     * @throws NumberFormatException exception to catch faulty/bad input for room number
+     * @throws InputMismatchException exception to catch faulty/bad input for room price and/or room type
+     *  method to add a room to the Collection<IRoom> rooms to store all rooms created within app
+     */
     public static void addARoom() throws NumberFormatException, InputMismatchException {
         //scanner to capture user input
         Scanner input = new Scanner(System.in);
@@ -108,8 +124,6 @@ public class AdminMenu {
                 addARoom();
             }
         }
-//        System.out.println("Please re-enter the room price.");
-
 
         //capture room type
         System.out.println("Enter room type: SINGLE(1) / DOUBLE(2): ");
@@ -119,13 +133,10 @@ public class AdminMenu {
         } catch (InputMismatchException e1) {
             System.out.println("Invalid entry.  \"1 for (SINGLE) / 2 for (DOUBLE)\"\n");
             while (roomType == null){
-//                roomType = input.nextInt() == 1 ? RoomType.SINGLE : RoomType.DOUBLE;
                 System.out.println("Please try again.\n");
                 addARoom();
             }
         }
-//        System.out.println("Please select your room type once more.");
-
 
         IRoom room = new Room(roomNumber, price, roomType);
         List<IRoom> rooms = new ArrayList<>();
@@ -149,8 +160,9 @@ public class AdminMenu {
         }
     }
 
-
-
+    /**
+     * method to return to main menu of application
+     */
     public static void returnToMainMenu() {
         MainMenu.selectMainMenuOptions();
     }

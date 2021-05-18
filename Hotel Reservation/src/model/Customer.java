@@ -10,19 +10,10 @@ public class Customer {
     private final String emailRegex = "^(.+)@(.+).com$";
     private final Pattern pattern = Pattern.compile(emailRegex);
 
-
     public Customer(String email, String firstName, String lastName)  {
         super();
-//        if (firstName.length() > 25 || lastName.length() > 25){
-//            throw new NullPointerException("A complete First and Last name must be entered.");
-//        }
         if(!pattern.matcher(email).matches()){
             throw new IllegalArgumentException("Error, invalid email.\n");
-//            System.out.println("""
-//                    Error, invalid email.
-//                    Please remember to enter email format: name@domain.com
-//                    """);
-
         }
         this.firstName = firstName.toUpperCase();
         this.lastName = lastName.toUpperCase();
